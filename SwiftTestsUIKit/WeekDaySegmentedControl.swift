@@ -16,9 +16,11 @@ final class WeekDaySegmentedControl: UIView {
             setSelectedIndex()
         }
     }
-    private var buttonPadding: CGFloat = 5
+    private var buttonPadding: CGFloat = 0
     private var isFullWeekSelected: Bool = false
     private var isFirstLaunch: Bool = true
+    private var didTapSegment: ((WeekDay) -> ())
+    private var didTapAllSegment: (() -> ())
 
     lazy private var currentIndexView: UIView = UIView(frame: .zero)
 
@@ -33,10 +35,12 @@ final class WeekDaySegmentedControl: UIView {
 
     private var activeView: UIView?
 
-    init(weekDay: [WeekDay], currentWeekDay: WeekDay) {
+    init(weekDay: [WeekDay], currentWeekDay: WeekDay, didTapAllSegment: @escaping (() -> ()), didTapSegment: @escaping ((WeekDay) -> ())) {
         self.weekDay = weekDay
         self.currentWeekDay = currentWeekDay
         self.selectedWeekDay = currentWeekDay
+        self.didTapSegment = didTapSegment
+        self.didTapAllSegment = didTapAllSegment
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -53,6 +57,10 @@ final class WeekDaySegmentedControl: UIView {
             setCurrentIndex()
             isFirstLaunch = false
         }
+    }
+
+    func getSelectedDay(_ day: WeekDay) {
+        selectedWeekDay = day
     }
 
     private func commonInit() {
@@ -83,9 +91,6 @@ final class WeekDaySegmentedControl: UIView {
     }
 
     private func addSegments() {
-        stackWeekDay.subviews.forEach { view in
-            (view as? UIButton)?.removeFromSuperview()
-        }
 
         let titles = weekDay.map { $0.rawValue }
 
@@ -94,13 +99,12 @@ final class WeekDaySegmentedControl: UIView {
             button.tag = index
 
             if let index = titles.indices.contains(index) ? index : nil {
-                button.setTitle(String(titles[index]), for: .normal)
-            } else {
-                button.setTitle("<Segment>", for: .normal)
+                button.setTitle(titles[index], for: .normal)
             }
 
-            button.titleLabel?.font = .systemFont(ofSize: 16)
-            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 14)
+            button.titleLabel?.numberOfLines = 2
+            button.setTitleColor(.label, for: .normal)
             button.addTarget(self, action: #selector(segmentTapped(_:)), for: .touchUpInside)
 
             stackWeekDay.addArrangedSubview(button)
@@ -182,15 +186,16 @@ final class WeekDaySegmentedControl: UIView {
     }
 
     private func setButtonCornerRadius() {
-        stackWeekDay.subviews.forEach { view in
-            (view as? UIButton)?.layer.cornerRadius = 10
-        }
+//        stackWeekDay.subviews.forEach { view in
+//            (view as? UIButton)?.layer.cornerRadius = 10
+//        }
 
-        currentIndexView.layer.cornerRadius = 10
+        currentIndexView.layer.cornerRadius = 8
     }
 
     private func setBorderColor() {
-        layer.borderColor = CGColor(gray: 10, alpha: 10)
+//        layer.borderColor = CGColor(gray: 10, alpha: 10)
+        layer.borderColor = UIColor.secondaryLabel.cgColor
     }
 
     private func setBorderWidth() {
@@ -199,14 +204,18 @@ final class WeekDaySegmentedControl: UIView {
 
     //MARK: - IBActions
     @objc func segmentTapped(_ sender: UIButton) {
-//        didTapSegment?(sender.tag)
         if selectedWeekDay == weekDay[sender.tag],
            !isFullWeekSelected {
             setSelectedAll()
             isFullWeekSelected = true
+            didTapAllSegment()
             print("Week All")
         } else {
             selectedWeekDay = weekDay[sender.tag]
+            if isFullWeekSelected {
+                didTapAllSegment()
+            }
+            didTapSegment(selectedWeekDay)
             isFullWeekSelected = false
             print(selectedWeekDay.rawValue)
         }
