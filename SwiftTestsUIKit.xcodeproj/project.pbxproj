@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		F7FB91DF2D203E2700889625 /* SwiftTestsUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTestsUIKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7EBFAEE2D3552D5001894E1 /* SwiftTestsUIKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SwiftTestsUIKit.app; path = "/Users/gleb/Desktop/iOS Develop/SwiftTestsUIKit/build/Debug-iphoneos/SwiftTestsUIKit.app"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,16 +46,7 @@
 			isa = PBXGroup;
 			children = (
 				F7FB91E12D203E2700889625 /* SwiftTestsUIKit */,
-				F7FB91E02D203E2700889625 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		F7FB91E02D203E2700889625 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F7FB91DF2D203E2700889625 /* SwiftTestsUIKit.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,7 +71,7 @@
 			packageProductDependencies = (
 			);
 			productName = SwiftTestsUIKit;
-			productReference = F7FB91DF2D203E2700889625 /* SwiftTestsUIKit.app */;
+			productReference = F7EBFAEE2D3552D5001894E1 /* SwiftTestsUIKit.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +99,7 @@
 			mainGroup = F7FB91D62D203E2700889625;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = F7FB91E02D203E2700889625 /* Products */;
+			productRefGroup = F7FB91D62D203E2700889625;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
